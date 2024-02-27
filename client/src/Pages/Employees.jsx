@@ -13,11 +13,6 @@ const Employees = () => {
 			</div>
 			
 
-			
-			
-			
-
-			
 			<section className="mx-auto w-full px-4 py-4">
 				
 
@@ -40,6 +35,8 @@ const Employees = () => {
 					</a>
 				</div>
 			</section>
+			
+			
 		</>
 	);
 };
