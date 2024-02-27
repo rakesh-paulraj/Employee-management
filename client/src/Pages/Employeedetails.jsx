@@ -15,18 +15,7 @@ const Employeedetails = () => {
 
       <section className="mx-auto w-full px-4 py-4">
         <form>
-          <div className="mb-4">
-            <label htmlFor="employeeId" className="block text-sm font-medium text-gray-700">
-              Employee ID:
-            </label>
-            <input
-              type="text"
-              id="employeeId"
-              name="employeeId"
-              className="mt-1 p-2 border rounded-md w-full"
-              placeholder="Enter Employee ID"
-            />
-          </div>
+          
 
           <div className="mb-4">
             <label htmlFor="employeeName" className="block text-sm font-medium text-gray-700">
@@ -65,6 +54,18 @@ const Employeedetails = () => {
               className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
+          <div className="mb-4">
+            <label htmlFor="age" className="block text-sm font-medium text-gray-700">
+              Age:
+            </label>
+            <input
+              type="text"
+              id="age"
+              name="age"
+              className="mt-1 p-2 border rounded-md w-full"
+              placeholder="Enter Age"
+            />
+          </div>
 
           <div className="mb-4">
             <label htmlFor="salary" className="block text-sm font-medium text-gray-700">
@@ -76,6 +77,18 @@ const Employeedetails = () => {
               name="salary"
               className="mt-1 p-2 border rounded-md w-full"
               placeholder="Enter Salary"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="salary" className="block text-sm font-medium text-gray-700">
+              Martial status:
+            </label>
+            <input
+              type="text"
+              id="martial_status"
+              name="martial_status"
+              className="mt-1 p-2 border rounded-md w-full"
+              placeholder="Married/Unmarried"
             />
           </div>
 

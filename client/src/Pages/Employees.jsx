@@ -7,20 +7,15 @@ const Employees = () => {
 	return (
 		<>
 			<div className="flex items-start justify-between mx-3">
-				<h1 className="mb-8 text-xl">Basic Details </h1>
+				<h1 className="mb-8 text-xl">Employees </h1>
 				
 				
 			</div>
-			<div className="flex items-start">
-				This page is to provide the 
-			</div>
+			
 
 			
 			
-				
-			<div className="">
-				<h1 className="mx-3 mt-8 text-xl">Basic details page</h1>
-			</div>
+			
 
 			
 			<section className="mx-auto w-full px-4 py-4">
