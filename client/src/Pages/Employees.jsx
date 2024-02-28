@@ -1,24 +1,50 @@
-import React, { useState } from "react";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import ReactPaginate from 'react-paginate';
+
+import { useEffect, useState,useRef } from "react";
+import axios from "axios";
+
 
 const Employees = () => {
-  // Assuming you have an array of employees
-  const [employees, setEmployees] = useState([
-    { id: 1, name: "John Doe", age: 30, dept: "IT", salary: 50000, hireDate: "2022-01-01", maritalStatus: "Single" },
-    { id: 2, name: "Jane Doe", age: 25, dept: "HR", salary: 60000, hireDate: "2021-12-15", maritalStatus: "Married" },
-    // Add more employees as needed
-  ]);
+ 
+const [data,setData]=useState([]);
+
+const currentpage=useRef();
+const [limit,setLimit]=useState(2);
+const [pageCount,setPageCount]=useState([]);
+useEffect(()=>{currentpage.current=1;
+  getPaginatedUsers();},[]);
+
+function handlePageChange(e){
+ currentpage.current=e.selected+1;
+  getPaginatedUsers();
+}
+function changeLimit(){
+  getPaginatedUsers
+}
 
   const handleEdit = (employeeId) => {
-    // Implement your edit logic here
+    
     console.log(`Edit employee with ID ${employeeId}`);
   };
 
   const handleDelete = (employeeId) => {
-    // Implement your delete logic here
+   
     console.log(`Delete employee with ID ${employeeId}`);
   };
+  function getPaginatedUsers() {
+    axios.get(`http://localhost:3000/employeelist?page=${currentpage.current}&limit=${limit}`)
+      .then((response) => {
+       
+       console.log(response.data);
+       setPageCount(parseInt(response.data.results.pagecount, 10) || 1);
 
+        setData(response.data.results.result2)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+       
+      });
+  }
   return (
     <>
       <div className="flex items-start justify-between mx-3">
@@ -39,25 +65,25 @@ const Employees = () => {
               <th className="py-2">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            {employees.map((employee) => (
-              <tr key={employee.id}>
-                <td className="py-2">{employee.id}</td>
-                <td className="py-2">{employee.name}</td>
-                <td className="py-2">{employee.age}</td>
-                <td className="py-2">{employee.dept}</td>
-                <td className="py-2">{employee.salary}</td>
-                <td className="py-2">{employee.hireDate}</td>
-                <td className="py-2">{employee.maritalStatus}</td>
+          <tbody> 
+            {data.map((i) => (
+              <tr key={i.id}>
+                <td className="py-2">{i.id}</td>
+                <td className="py-2">{i.name}</td>
+                <td className="py-2">{i.age}</td>
+                <td className="py-2">{i.dept}</td>
+                <td className="py-2">{i.salary}</td>
+                <td className="py-2">{i.hiredate}</td>
+                <td className="py-2">{i.martial_status}</td>
                 <td className="py-2">
                   <button
-                    onClick={() => handleEdit(employee.id)}
+                    onClick={() => handleEdit(i.id)}
                     className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(employee.id)}
+                    onClick={() => handleDelete(i.id)}
                     className="bg-red-500 text-white px-2 py-1 rounded-md"
                   >
                     Delete
@@ -68,23 +94,25 @@ const Employees = () => {
           </tbody>
         </table>
 
-        <div className="mt-6 flex items-center justify-center">
-          <a
-            href="#"
-            className="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 mr-10 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100"
-          >
-            <IoIosArrowBack className="h-4 w-4" />
-            <span>Previous</span>
-          </a>
-
-          <a
-            href="#"
-            className="flex items-center gap-x-2 rounded-md border bg-white px-5 py-2 ml-10 text-sm capitalize text-gray-700 transition-colors duration-200 hover:bg-gray-100"
-          >
-            <span>Next</span>
-            <IoIosArrowForward className="h-4 w-4" />
-          </a>
-        </div>
+        <ReactPaginate
+  breakLabel="..."
+  nextLabel="next >"
+  onPageChange={handlePageChange}
+  pageRangeDisplayed={5}
+  pageCount={pageCount}
+  previousLabel="< previous"
+  renderOnZeroPageCount={null}
+  marginPagesDisplayed={2}
+  containerClassName="flex items-center justify-center space-x-2 mt-4"
+  pageClassName="px-3 py-2 border rounded hover:bg-orange-200"
+  pageLinkClassName="text-black-500"
+  previousClassName="px-3 py-2 border rounded hover:bg-orange-300"
+  previousLinkClassName="text-black-500"
+  nextClassName="px-3 py-2 border rounded hover:bg-orange-300"
+  nextLinkClassName="text-black-500"
+  activeClassName="bg-orange-500 text-white"
+/><input placeholder="Limit" onChange={e=>setLimit(e.target.value)}/>
+<button onClick={changeLimit}>Change limit</button>
       </section>
     </>
   );

@@ -56,9 +56,6 @@ app.post("/employeedetails", async (req, res, next) => {
         return res.status(400).json({ message: "Hey provide all required fields" });
       }
   
-      
-  
-      
       const result = await Details.create(
         details
       );
@@ -71,6 +68,42 @@ app.post("/employeedetails", async (req, res, next) => {
       res.status(500).json({ message: "Error adding employee details" });
     }
   });
+  
+  
+  app.get("/employeelist", async (req, res, next) => {
+
+    try {
+      const result = await Details.findAll();
+      const page=parseInt(req.query.page);
+      const limit=parseInt(req.query.limit);
+      
+      
+      const startIndex=(page-1)*limit
+      const lastIndex=(page)*limit
+      
+
+      const results={}
+      results.totaluser=result.length;
+      results.pagecount=Math.ceil(result.length/limit);
+      if(lastIndex<result.length){
+      results.next={page:page+1}}
+      if (startIndex>0){
+      results.previous={page:page-1}}
+
+      results.result2=result.slice(startIndex,lastIndex)
+
+
+
+      res.status(200).json({
+      results
+      });
+    } catch (error) {
+      console.log("Error fetching employee details", error);
+      res.status(500).json({ message: "Error fetching employee details" });
+    }
+  });
+    
+
 
 
 
