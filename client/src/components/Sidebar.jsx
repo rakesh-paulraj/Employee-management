@@ -75,7 +75,7 @@ const Sidebar= () => {
 								
 								<li>
 									<Link
-										to="/employeedetails"
+										to="/"
 										className="flex items-center p-2 text-gray-900 rounded-md dark:text-black hover:bg-orange-100 dark:hover:bg-orange-400 group"
 									>
 										<HiOutlineClipboardList />
@@ -110,7 +110,7 @@ const Sidebar= () => {
 						<div className="p-4 rounded-lg">
 							<Routes>
 								
-								<Route path="/employeedetails" element={<Employeedetails />} />
+								<Route path="/" element={<Employeedetails />} />
 								<Route path="/employees" element={<Employees />} />
 								
 								
