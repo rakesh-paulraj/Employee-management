@@ -8,12 +8,23 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Employeedetails = () => {
-  const[name, setName] = useState("");  
-  const[dept, setDept] = useState("");
-  const[hiredate, setHiredate] = useState("");
-  const[age, setAge] = useState("");
-  const[martial_status, setMartial_status] = useState("");
-  const[salary, setSalary] = useState("");
+
+  const[details,setDetails]=useState({
+    name:"",
+    age: "", 
+    dept: "",
+    hiredate: "",
+    salary : "",
+    martial_status: "",
+
+});
+const handlechange = (e) => {
+  const { name, value } = e.target;
+    setDetails((prev)=>{return {...details, [name]: value} });
+    
+  };
+
+
 
 
   return (
@@ -37,10 +48,10 @@ const Employeedetails = () => {
             <input
               type="text"
               id="employeeName"
-              name="employeeName"
+              name="name"
               className="mt-1 p-2 border rounded-md w-full"
               placeholder="Enter Employee Name"
-              onChange={e=>{setName(e.target.value);}}
+              onChange={handlechange}
             />
           </div>
 
@@ -51,10 +62,10 @@ const Employeedetails = () => {
             <input
               type="text"
               id="department"
-              name="department"
+              name="dept"
               className="mt-1 p-2 border rounded-md w-full"
               placeholder="Enter Department"
-              onChange={e=>{setDept(e.target.value);}}
+              onChange={handlechange}
             />
           </div>
 
@@ -64,10 +75,10 @@ const Employeedetails = () => {
             </label>
             <input
               type="date"
-              id="hireDate"
-              name="hireDate"
+              id="hiredate"
+              name="hiredate"
               className="mt-1 p-2 border rounded-md w-full"
-              onChange={e=>{setHiredate(e.target.value);}}
+              onChange={handlechange}
             />
           </div>
           <div className="mb-4">
@@ -80,7 +91,7 @@ const Employeedetails = () => {
               name="age"
               className="mt-1 p-2 border rounded-md w-full"
               placeholder="Enter Age"
-              onChange={e=>{setAge(e.target.value);}}
+              onChange={handlechange}
             />
           </div>
 
@@ -94,7 +105,7 @@ const Employeedetails = () => {
               name="salary"
               className="mt-1 p-2 border rounded-md w-full"
               placeholder="Enter Salary"
-              onChange={e=>{setSalary(e.target.value);}}
+              onChange={handlechange}
             />
           </div>
           <div className="mb-4">
@@ -107,7 +118,7 @@ const Employeedetails = () => {
               name="martial_status"
               className="mt-1 p-2 border rounded-md w-full"
               placeholder="Married/Unmarried"
-              onChange={e=>{setMartial_status(e.target.value);}}
+              onChange={handlechange}
             />
           </div>
 
@@ -117,12 +128,7 @@ const Employeedetails = () => {
       <button onClick={async()=>{
           try {
         const response= await axios.post("http://localhost:3000/employeedetails",{
-          name,
-          age,
-          dept,
-          hiredate,
-          salary,
-          martial_status
+          details
            })
         
         toast.info(response.data.message, {
