@@ -102,7 +102,83 @@ app.post("/employeedetails", async (req, res, next) => {
       res.status(500).json({ message: "Error fetching employee details" });
     }
   });
-    
+
+  app.delete('/employeelist/:id', async (req, res) => {
+    const employeeId = req.params.empId;
+  
+    try {
+      const employeeId = req.params.id;
+      if (!employeeId) {
+        return res.status(400).json({ message: "Employee ID is required for deletion" });
+      }
+      const result = await Details.destroy({ where: { empId: employeeId } });
+  
+      if (result) {
+        
+        res.status(200).json({ message: "Employee deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Employee not found for deletion" });
+      }
+    } catch (error) {
+      console.error('Error deleting employee', error);
+      res.status(500).json({ message: "Error deleting employee" });
+    }
+  });
+  app.put('/employeelist/:id', async (req, res) => {
+    const employeeId = req.params.id;
+  
+    try {
+      if (!employeeId) {
+        return res.status(400).json({ message: "Employee ID is required for editing" });
+      }
+      const { name, age, dept, hiredate, salary, martial_status } = req.body;
+      if (!name || !age || !dept || !hiredate || !salary || !martial_status) {
+        return res.status(400).json({ message: "Please provide all required fields" });
+      }
+
+      const result = await Details.update(
+        {
+          name,
+          age,
+          dept,
+          hiredate,
+          salary,
+          martial_status,
+        },
+        { where: { empId: employeeId } }
+      );
+  
+      if (result[0]) {
+        
+        res.status(200).json({ message: "Employee details updated successfully" });
+      } else {
+        res.status(404).json({ message: "Employee not found for editing" });
+      }
+    } catch (error) {
+      console.error('Error updating  here employee details', error);
+      res.status(500).json({ message: "Error updating here employee details" });
+    }
+  });
+  app.get('/employeeone/:id', async (req, res) => {
+    const employeeId = req.params.id;
+    try {
+      if (!employeeId) {
+        return res.status(400).json({ message: "Employee ID is required for fetching details" });
+      }
+  
+      
+      const employeedetails = await Details.findOne({ where: { empId: employeeId } });
+  
+      if (employeedetails) {
+        res.status(200).json({ employeedetails });
+      } else {
+        res.status(404).json({ message: "Employee details not found" });
+      }
+    } catch (error) {
+      console.error('Error fetching employee details', error);
+      res.status(500).json({ message: "Error fetching employee details" });
+    }
+  });
 
 
 
